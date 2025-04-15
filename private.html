@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Make it Private</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0e0e0e;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #0d47a1;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .navbar h1 {
+      margin: 0;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Toggle Buttons */
+    .toggle-buttons {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .toggle-buttons button {
+      background-color: #1a1a1a;
+      border: none;
+      color: #fff;
+      border-radius: 20px;
+      padding: 0.7rem 2rem;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .toggle-buttons button:hover{
+      transform: scale(1.2);
+      color: #0d47a1;
+      box-shadow: #0d47a1 0.6;
+    }
+
+    .toggle-buttons button.active {
+      border-bottom: 2px solid #0d47a1;
+      color: #0d47a1;
+    }
+
+    /* Container for content */
+    .content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    input[type="file"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.6rem;
+      background: #1f1f1f;
+      border: 1px solid #444;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+
+    .preview {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    video, img {
+      max-width: 100%;
+      max-height: 300px;
+      margin-top: 1rem;
+      border: 1px solid #333;
+    }
+
+    button.action {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #0d47a1;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button.action:hover {
+      background-color:rgb(15, 101, 199);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    button.reset {
+      padding: 0.7rem;
+      background-color: #333;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 2rem;
+      transition: 0.3s;
+      flex: 1;
+    }
+
+    button.reset:hover {
+      background-color: #555;
+    }
+
+    /* Decrypt Preview Section */
+    #decryptPreview {
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 1rem;
+      background-color: #1a1a1a;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    #downloadButton {
+      margin-top: 1rem;
+      padding: 0.7rem 2rem;
+      background-color: #0d47a1;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    #downloadButton:hover {
+      background-color: rgb(15, 101, 199);
+    }
+  </style>
+</head>
+<body>
+
+ <!-- Navbar -->
+<div class="navbar">
+  <h1>Make it Private</h1>
+</div>
+
+<!-- Toggle Buttons -->
+<div class="toggle-buttons">
+  <button id="encryptTab" class="active">Encrypt</button>
+  <button id="decryptTab">Decrypt</button>
+</div>
+
+<!-- Encrypt Section -->
+<div id="encryptSection" class="content active">
+  <input type="file" id="encryptFile" accept="image/*,video/*" />
+  <div class="preview" id="encryptPreview"></div>
+  <input type="password" id="encryptPassword" placeholder="Enter a strong password" />
+  <div class="button-group">
+    <button class="action" id="encryptBtn">Encrypt</button>
+    <button class="reset" id="resetEncryptBtn">Reset</button>
+  </div>
+</div>
+
+<!-- Decrypt Section -->
+<div id="decryptSection" class="content">
+  <textarea rows="6" id="decryptText" placeholder="Paste your encrypted text here OR upload a file below..."></textarea>
+  <input type="file" id="decryptFile" accept=".txt" />
+  <input type="password" id="decryptPassword" placeholder="Enter the password" />
+  <div class="button-group">
+    <button class="action" id="decryptBtn">Decrypt</button>
+    <button class="reset" id="resetDecryptBtn">Reset</button>
+  </div>
+</div>
+
+<!-- Decrypted file preview and download button -->
+<div id="decryptPreview" style="display: none;">
+  <h3>Decrypted Preview</h3>
+  <div id="previewContent"></div>
+  <button id="downloadButton">Download</button>
+</div>
+
+<!-- Warning message (hidden by default) -->
+<div id="fileSizeWarning" style="display: none; color: red;">
+  <p>Warning: This file is large, it may take longer to process. Proceed with caution.</p>
+  <button id="proceedButton">Proceed</button>
+  <button id="cancelButton">Cancel</button>
+</div>
+
+
+<script>
+  // Tab Switching
+ // Tab Switching
+// Tab Switching
+const encryptTab = document.getElementById('encryptTab');
+const decryptTab = document.getElementById('decryptTab');
+const encryptSection = document.getElementById('encryptSection');
+const decryptSection = document.getElementById('decryptSection');
+const decryptPreview = document.getElementById('decryptPreview');
+
+// Initially hide the decrypt preview
+decryptPreview.style.display = 'none';
+
+encryptTab.addEventListener('click', () => {
+  encryptTab.classList.add('active');
+  decryptTab.classList.remove('active');
+  encryptSection.classList.add('active');
+  decryptSection.classList.remove('active');
+  // Hide decrypt preview when switching tabs
+  decryptPreview.style.display = 'none';
+});
+
+decryptTab.addEventListener('click', () => {
+  decryptTab.classList.add('active');
+  encryptTab.classList.remove('active');
+  decryptSection.classList.add('active');
+  encryptSection.classList.remove('active');
+  // Hide decrypt preview when switching tabs
+  decryptPreview.style.display = 'none';
+});
+
+// Encrypt Section Logic
+const fileInput = document.getElementById('encryptFile');
+const encryptPreview = document.getElementById('encryptPreview');
+const encryptPassword = document.getElementById('encryptPassword');
+const encryptBtn = document.getElementById('encryptBtn');
+
+// Show file preview when selected for encryption
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (file) {
+    encryptPreview.innerHTML = '';
+    
+    if (file.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      encryptPreview.appendChild(img);
+    } else if (file.type.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.src = URL.createObjectURL(file);
+      video.controls = true;
+      encryptPreview.appendChild(video);
+    }
+  }
+});
+
+// Helper function to safely convert ArrayBuffer to base64
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+// Helper function to convert base64 to ArrayBuffer
+function base64ToArrayBuffer(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+}
+
+// Function to derive the key for encryption/decryption
+async function deriveKey(password, salt) {
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw", 
+    enc.encode(password), 
+    "PBKDF2", 
+    false, 
+    ["deriveKey"]
+  );
+
+  return crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt", "decrypt"]
+  );
+}
+
+// Reset functionality for encrypt section
+document.getElementById('resetEncryptBtn').addEventListener('click', () => {
+  // Clear file input
+  fileInput.value = '';
+  // Clear password field
+  encryptPassword.value = '';
+  // Clear preview
+  encryptPreview.innerHTML = '';
+});
+
+// Encryption process
+encryptBtn.addEventListener('click', async () => {
+  const file = fileInput.files[0];
+  const password = encryptPassword.value;
+
+  if (!file || !password) {
+    alert("Please provide both a file and a password!");
+    return;
+  }
+
+  try {
+    const reader = new FileReader();
+    reader.onload = async function (event) {
+      try {
+        const fileData = event.target.result;
+
+        // Encrypt the file
+        const salt = crypto.getRandomValues(new Uint8Array(16));
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const key = await deriveKey(password, salt);
+
+        const encryptedData = await crypto.subtle.encrypt(
+          { name: "AES-GCM", iv }, 
+          key, 
+          fileData
+        );
+        
+        // Prepare encrypted content for download or further use
+        const encryptedContent = {
+          salt: arrayBufferToBase64(salt),
+          iv: arrayBufferToBase64(iv),
+          ciphertext: arrayBufferToBase64(encryptedData),
+          filename: file.name,
+          type: file.type // Store the file type for proper decryption
+        };
+
+        // Convert encrypted content to JSON text
+        const encryptedText = JSON.stringify(encryptedContent);
+
+        // Create encrypted file for download
+        const blob = new Blob([encryptedText], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${file.name}.encrypted.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        // Switch to decrypt tab and populate textarea
+        decryptTab.click();
+        document.getElementById('decryptText').value = encryptedText;
+        
+        alert("File encrypted successfully! You can now decrypt it or save the encrypted text.");
+      } catch (innerError) {
+        console.error("Error in file processing:", innerError);
+        alert("Error processing the file. The file might be too large or corrupted.");
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  } catch (error) {
+    console.error("Encryption error:", error);
+    alert("An error occurred during encryption. Please try again.");
+  }
+});
+
+// Reset functionality for decrypt section
+document.getElementById('resetDecryptBtn').addEventListener('click', () => {
+  // Clear decrypt text area
+  document.getElementById('decryptText').value = '';
+  // Clear decrypt file input
+  document.getElementById('decryptFile').value = '';
+  // Clear decrypt password
+  document.getElementById('decryptPassword').value = '';
+  // Hide decrypt preview
+  decryptPreview.style.display = 'none';
+});
+
+// Decryption Logic
+document.getElementById('decryptBtn').addEventListener('click', async () => {
+  const password = document.getElementById('decryptPassword').value;
+  const decryptTextArea = document.getElementById('decryptText');
+  const decryptFileInput = document.getElementById('decryptFile');
+  
+  if (!password) {
+    alert("Please enter the password.");
+    return;
+  }
+
+  let encryptedData;
+
+  // Check if the user pasted encrypted text or uploaded a file
+  if (decryptTextArea.value.trim()) {
+    try {
+      encryptedData = JSON.parse(decryptTextArea.value.trim());
+    } catch (e) {
+      alert("Invalid encrypted text format.");
+      return;
+    }
+  } else if (decryptFileInput.files[0]) {
+    try {
+      const fileText = await decryptFileInput.files[0].text();
+      encryptedData = JSON.parse(fileText);
+    } catch (e) {
+      alert("Invalid encrypted file format.");
+      return;
+    }
+  } else {
+    alert("Please paste encrypted text or upload a .txt file.");
+    return;
+  }
+
+  try {
+    // Decrypt the file
+    const salt = base64ToArrayBuffer(encryptedData.salt);
+    const iv = base64ToArrayBuffer(encryptedData.iv);
+    const ciphertext = base64ToArrayBuffer(encryptedData.ciphertext);
+    const key = await deriveKey(password, salt);
+
+    const decrypted = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv }, 
+      key, 
+      ciphertext
+    );
+
+    // Create a Blob of the decrypted content with the correct MIME type
+    const fileType = encryptedData.type || 'application/octet-stream';
+    const decryptedBlob = new Blob([decrypted], { type: fileType });
+    
+    // Clear previous content
+    const previewContent = document.getElementById('previewContent');
+    previewContent.innerHTML = '';
+
+    // Show preview based on file type
+    const url = URL.createObjectURL(decryptedBlob);
+    
+    if (fileType.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = url;
+      previewContent.appendChild(img);
+    } else if (fileType.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.src = url;
+      video.controls = true;
+      previewContent.appendChild(video);
+    } else {
+      // For other file types, just show a message
+      previewContent.innerHTML = `<p>File decrypted successfully. Click the download button below.</p>`;
+    }
+
+    // Show decrypt preview
+    decryptPreview.style.display = 'block';
+    
+    // Set up download button
+    const downloadButton = document.getElementById('downloadButton');
+    // Remove any existing event listeners
+    const newDownloadButton = downloadButton.cloneNode(true);
+    downloadButton.parentNode.replaceChild(newDownloadButton, downloadButton);
+    
+    newDownloadButton.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = encryptedData.filename || "decrypted_file";
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+  } catch (err) {
+    console.error("Decryption error:", err);
+    alert("Decryption failed: Incorrect password or corrupted data.");
+  }
+});
+</script>
+
+</body>
+</html>
