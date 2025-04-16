@@ -457,7 +457,10 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
+    .trust-section * {
+  position: relative;
+  z-index: 1;
+}
     .trust-section h3 {
       font-family: 'Caveat', cursive;
       font-size: 2rem;
@@ -1449,6 +1452,33 @@
         50% { transform: rotate(180deg) scale(1.05); }
         100% { transform: rotate(360deg) scale(1); }
       }
+}
+@media (max-width: 400px) {
+  .trust-section {
+    padding: 1.5rem;
+    min-height: 260px; /* More space for animation */
+  }
+
+  .trust-section::before {
+    top: -41%;
+        left: -20%;
+        width: 140%;
+        height: 120%;
+        background: radial-gradient(circle, rgba(255, 197, 236, 0.1) 0%, rgba(255, 197, 236, 0.03) 69%, transparent 80%);
+    animation: rotateMobile 8s linear infinite;
+  }
+}
+
+@keyframes rotateMobile {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
 }
   </style>
 </head>
