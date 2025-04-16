@@ -1123,7 +1123,333 @@
   cursor: pointer;
   color: #666;
 }
-
+/* Mobile Responsiveness (430px and below) */
+@media screen and (max-width: 430px) {
+  /* General adjustments */
+  body {
+    font-size: 14px;
+  }
+  
+  /* Navbar and tagline adjustments */
+  .navbar {
+    padding: 0.7rem 0.5rem;
+  }
+  
+  .navbar h1 {
+    font-size: 1.2rem;
+  }
+  
+  .tagline {
+    margin-left: 0;
+    font-size: 0.8rem;
+    gap: 0.3rem;
+    justify-content: center;
+  }
+  
+  .trust-line {
+    font-size: 0.8rem;
+    margin: 0.5rem auto 1rem;
+  }
+  
+  /* Button adjustments */
+  .toggle-buttons {
+    flex-direction: row;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .toggle-buttons button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    width: auto;
+    border-radius: 15px;
+  }
+  
+  button.action, button.reset, #downloadButton {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* Container and section adjustments */
+  .container{
+    width: 90%;
+    padding: 15px;
+    margin: 1rem auto;
+    border-radius: 10px;
+  }
+  
+  .container h2, .about-project h2 {
+    font-size: 1.5rem;
+  }
+  
+  .section {
+    
+    width: 87%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .section h3 {
+    font-size: 1.1rem;
+  }
+  
+  .section h3 img {
+    max-width: 20px;
+  }
+  
+  .section p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  /* Feature icons adjustments */
+  .feature-icons {
+    flex-direction: column;
+    margin: 1.5rem 0;
+  }
+  
+  .feature-icon {
+    margin: 0.7rem 0;
+    padding: 0.7rem;
+  }
+  .about-project {
+    padding: 15px;
+    margin: 1rem auto;
+    border-radius: 10px;
+    width: 85%;
+  }
+  .feature-icon img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .feature-icon h4 {
+    font-size: 0.9rem;
+  }
+  
+  .feature-icon p {
+    font-size: 0.8rem;
+  }
+  
+  /* Trust section fixes */
+  .trust-section {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .trust-section h3 {
+    font-size: 1.3rem;
+  }
+  
+  .trust-section p {
+    font-size: 0.9rem;
+  }
+  
+  .trust-section span {
+    font-size: 1.1rem;
+  }
+  
+  /* Timeline adjustments (non-symmetrical) */
+  .process-timeline::before {
+    left: 20px;
+  }
+  
+  .timeline-step {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+  }
+  
+  .timeline-step:nth-child(odd) {
+    flex-direction: row;
+  }
+  
+  .timeline-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    left: 20px;
+  }
+  
+  .timeline-content {
+    width: calc(100% - 50px);
+    margin-left: 40px;
+    padding: 1rem;
+  }
+  
+  .timeline-step:nth-child(1) .timeline-content {
+    margin-top: -5px;
+  }
+  
+  .timeline-step:nth-child(2) .timeline-content {
+    margin-top: 10px;
+  }
+  
+  .timeline-step:nth-child(3) .timeline-content {
+    margin-top: -10px;
+  }
+  
+  .timeline-content h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-content p {
+    font-size: 0.9rem;
+  }
+  
+  /* Action buttons */
+  .action-buttons {
+    flex-direction: column;
+    gap: 10px;
+    margin: 1.5rem 0;
+  }
+  
+  .action-button {
+    padding: 6px 3px;
+    font-size: 0.9rem;
+    min-width: 100%;
+    gap: 5px;
+  }
+  
+  /* Quick links and footer (asymmetrical) */
+  .quick-links-header {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-columns {
+    gap: 15px;
+    justify-content: space-around;
+    margin-top: 1rem;
+  }
+  
+  .footer-column:nth-child(1) {
+    margin-left: -10px;
+  }
+  
+  .footer-column:nth-child(2) {
+    margin-right: 10px;
+  }
+  
+  .footer-column:nth-child(3) {
+    margin-left: 5px;
+  }
+  
+  .footer-column:nth-child(4) {
+    margin-right: -5px;
+  }
+  
+  .footer-title {
+    font-size: 0.8rem;
+  }
+  
+  .footer-icons-row {
+    gap: 8px;
+  }
+  
+  .footer-link {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  
+  .footer-metallic-text {
+    font-size: 0.8rem;
+  }
+  
+  .copyright {
+    font-size: 0.7rem;
+    margin-top: 1rem;
+  }
+  
+  /* Form elements adjustments */
+  input[type="text"],
+  input[type="file"],
+  input[type="password"],
+  textarea {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .drag-drop-area {
+    padding: 20px 10px;
+  }
+  
+  .drag-drop-message i {
+    font-size: 30px;
+  }
+  
+  .drag-drop-message p {
+    font-size: 0.8rem;
+  }
+  
+  .file-label {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .toggle-eye {
+    font-size: 1.1rem;
+  }
+  
+  /* Animation fixes for typing text */
+  @keyframes shimmer {
+    0% { background-position: -300px 0; }
+    100% { background-position: 300px 0; }
+  }
+  
+  /* Trust animation fix */
+  @keyframes fadeInTrust {
+    from {
+      opacity: 0;
+      transform: translateY(-3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Preview area adjustments */
+  #decryptPreview {
+    padding: 0.7rem;
+  }
+  
+  #decryptPreview h3 {
+    font-size: 1rem;
+  }
+  
+  video, img {
+    max-height: 200px;
+  }
+  .trust-section::before {
+        content: "";
+        position: absolute;
+        top: -30%;
+        left: -30%;
+        width: 160%;
+        height: 160%;
+        /* Increased opacity from 0.014 to 0.08 for better visibility */
+        background: radial-gradient(circle, rgba(255, 197, 236, 0.08) 0%, rgba(255, 197, 236, 0.02) 50%, transparent 80%);
+        /* Added a more pronounced gradient with multiple stops */
+        /* Slightly faster animation for mobile */
+        animation: rotateMobile 10s linear infinite;
+      }
+      
+      @keyframes rotateMobile {
+        0% { transform: rotate(0deg) scale(1); }
+        50% { transform: rotate(180deg) scale(1.05); }
+        100% { transform: rotate(360deg) scale(1); }
+      }
+}
   </style>
 </head>
 <body>
