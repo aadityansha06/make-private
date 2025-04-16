@@ -1129,6 +1129,50 @@
 }
 /* Mobile Responsiveness (430px and below) */
 @media screen and (max-width: 430px) {
+  html, body {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+  }
+  
+  #decryptSection, #encryptSection {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  /* Ensure drag-drop areas don't overflow */
+  .drag-drop-area {
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Fix any potential button group overflow */
+  .button-group {
+    width: 100%;
+  }
+  
+  /* Ensure preview area doesn't overflow */
+  #decryptPreview {
+    max-width: 100%;
+    width: auto;
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  /* Fix any margins that might be causing overflow */
+  .content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
   /* General adjustments */
   body {
     font-size: 14px;
