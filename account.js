@@ -1,6 +1,6 @@
 // account.js
 import { supabase } from "./supabaseClient.js";
-
+ 
 // Get current logged-in user
 async function getCurrentUser() {
   const { data, error } = await supabase.auth.getUser();

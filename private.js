@@ -1,7 +1,7 @@
 // Add these imports at the top of your private.js file
 import { supabase } from "./supabaseClient.js";
+ 
 
-// private.js
 
 // Tab Switching
 const encryptTab = document.getElementById('encryptTab');
