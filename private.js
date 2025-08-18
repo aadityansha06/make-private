@@ -1,7 +1,6 @@
 // Add these imports at the top of your private.js file
 import { supabase } from "./supabaseClient.js";
-const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
 // private.js
 
 // Tab Switching
