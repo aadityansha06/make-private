@@ -1,3 +1,9 @@
+// Add these imports at the top of your private.js file
+import { supabase } from "./supabaseClient.js";
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+// private.js
+
 // Tab Switching
 const encryptTab = document.getElementById('encryptTab');
 const decryptTab = document.getElementById('decryptTab');
@@ -16,7 +22,6 @@ function createNotificationSystem() {
   notificationArea.style.maxWidth = '400px';
   document.body.appendChild(notificationArea);
   
-  // Add privacy notice
   const privacyNotice = document.createElement('div');
   privacyNotice.style.backgroundColor = 'rgba(0, 172, 252, 0.8)';
   privacyNotice.style.color = 'white';
@@ -26,7 +31,6 @@ function createNotificationSystem() {
   privacyNotice.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
   privacyNotice.innerHTML = '<strong>Privacy Notice:</strong> All encryption and decryption occurs directly on your device. No data is sent to any server, ensuring your files remain private and secure.';
   
-  // Add close button
   const closeButton = document.createElement('span');
   closeButton.textContent = '×';
   closeButton.style.float = 'right';
@@ -44,7 +48,6 @@ function createNotificationSystem() {
   return notificationArea;
 }
 
-// Create notification area ONCE
 const notificationArea = createNotificationSystem();
 
 function showPasswordNotification(duration = 20000) {
@@ -74,7 +77,6 @@ function showPasswordNotification(duration = 20000) {
     passwordNotice.insertBefore(closeButton, passwordNotice.firstChild);
     notificationArea.appendChild(passwordNotice);
     
-    // Auto dismiss after specified duration
     if (duration) {
       setTimeout(() => {
         passwordNotice.style.opacity = '0';
@@ -87,10 +89,8 @@ function showPasswordNotification(duration = 20000) {
     }
 }
 
-// Call the password notification function immediately to display it
 showPasswordNotification();
 
-// Function to show notifications instead of alerts
 function showNotification(message, type = 'info', duration = 8000) {
   const notification = document.createElement('div');
   notification.style.backgroundColor = type === 'error' ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 172, 252, 0.8)';
@@ -102,7 +102,6 @@ function showNotification(message, type = 'info', duration = 8000) {
   notification.style.opacity = '0';
   notification.style.transition = 'opacity 0.3s ease-in-out';
   
-  // Add close button
   const closeButton = document.createElement('span');
   closeButton.textContent = '×';
   closeButton.style.float = 'right';
@@ -119,7 +118,6 @@ function showNotification(message, type = 'info', duration = 8000) {
   
   notificationArea.appendChild(notification);
   
-  // Force reflow to enable transition
   notification.offsetHeight;
   notification.style.opacity = '1';
   
@@ -141,58 +139,6 @@ function showNotification(message, type = 'info', duration = 8000) {
   };
 }
 
-// Function to show notifications instead of alerts
-function showNotification(message, type = 'info', duration = 8000) {
-  const notification = document.createElement('div');
-  notification.style.backgroundColor = type === 'error' ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 172, 252, 0.8)';
-  notification.style.color = 'white';
-  notification.style.padding = '15px';
-  notification.style.marginBottom = '10px';
-  notification.style.borderRadius = '5px';
-  notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-  notification.style.opacity = '0';
-  notification.style.transition = 'opacity 0.3s ease-in-out';
-  
-  // Add close button
-  const closeButton = document.createElement('span');
-  closeButton.textContent = '×';
-  closeButton.style.float = 'right';
-  closeButton.style.cursor = 'pointer';
-  closeButton.style.marginLeft = '10px';
-  closeButton.style.fontSize = '20px';
-  closeButton.style.lineHeight = '14px';
-  closeButton.onclick = function() {
-    removeNotification();
-  };
-  
-  notification.textContent = message;
-  notification.insertBefore(closeButton, notification.firstChild);
-  
-  notificationArea.appendChild(notification);
-  
-  // Force reflow to enable transition
-  notification.offsetHeight;
-  notification.style.opacity = '1';
-  
-  function removeNotification() {
-    notification.style.opacity = '0';
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.parentNode.removeChild(notification);
-      }
-    }, 5000);
-  }
-  
-  if (duration) {
-    setTimeout(removeNotification, duration);
-  }
-  
-  return {
-    remove: removeNotification
-  };
-}
-
-// Initially hide the decrypt preview
 decryptPreview.style.display = 'none';
 
 encryptTab.addEventListener('click', () => {
@@ -200,7 +146,6 @@ encryptTab.addEventListener('click', () => {
   decryptTab.classList.remove('active');
   encryptSection.classList.add('active');
   decryptSection.classList.remove('active');
-  // Hide decrypt preview when switching tabs
   decryptPreview.style.display = 'none';
 });
 
@@ -209,26 +154,21 @@ decryptTab.addEventListener('click', () => {
   encryptTab.classList.remove('active');
   decryptSection.classList.add('active');
   encryptSection.classList.remove('active');
-  // Hide decrypt preview when switching tabs
   decryptPreview.style.display = 'none';
 });
 
-// Encrypt Section Logic
 const fileInput = document.getElementById('encryptFile');
 const encryptPreview = document.getElementById('encryptPreview');
 const encryptPassword = document.getElementById('encryptPassword');
 const encryptBtn = document.getElementById('encryptBtn');
 
-// Store URLs for cleanup
 let activeObjectURLs = [];
 
-// Clean up object URLs to prevent memory leaks
 function revokeAllObjectURLs() {
   activeObjectURLs.forEach(url => URL.revokeObjectURL(url));
   activeObjectURLs = [];
 }
 
-// Show file preview when selected for encryption
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   if (file) {
@@ -242,7 +182,6 @@ fileInput.addEventListener('change', () => {
     }
     encryptPreview.innerHTML = '';
     
-    // Revoke any existing object URLs first
     revokeAllObjectURLs();
     
     if (file.type.startsWith('image/')) {
@@ -259,7 +198,6 @@ fileInput.addEventListener('change', () => {
       video.controls = true;
       encryptPreview.appendChild(video);
     } else {
-      // Add text preview for text files
       if (file.type.startsWith('text/') || file.name.endsWith('.txt') || file.name.endsWith('.json')) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -269,7 +207,6 @@ fileInput.addEventListener('change', () => {
         };
         reader.readAsText(file);
       } else {
-        // For other file types, just show filename and size
         const fileInfo = document.createElement('div');
         fileInfo.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
         encryptPreview.appendChild(fileInfo);
@@ -278,7 +215,6 @@ fileInput.addEventListener('change', () => {
   }
 });
 
-// Helper function to safely convert ArrayBuffer to base64
 function arrayBufferToBase64(buffer) {
   let binary = '';
   const bytes = new Uint8Array(buffer);
@@ -289,17 +225,15 @@ function arrayBufferToBase64(buffer) {
   return btoa(binary);
 }
 
-// Helper function to convert base64 to ArrayBuffer
 function base64ToArrayBuffer(base64) {
   const binary = atob(base64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) {
     bytes[i] = binary.charCodeAt(i);
   }
-  return bytes.buffer; // Return buffer instead of typed array for compatibility
+  return bytes.buffer;
 }
 
-// Function to derive the key for encryption/decryption
 async function deriveKey(password, salt) {
   const enc = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
@@ -324,19 +258,13 @@ async function deriveKey(password, salt) {
   );
 }
 
-// Reset functionality for encrypt section
 document.getElementById('resetEncryptBtn').addEventListener('click', () => {
-  // Clear file input
   fileInput.value = '';
-  // Clear password field
   encryptPassword.value = '';
-  // Clear preview
   encryptPreview.innerHTML = '';
-  // Revoke any existing object URLs
   revokeAllObjectURLs();
 });
 
-// Show loading indicator
 function showLoading(element, isLoading) {
   if (isLoading) {
     element.disabled = true;
@@ -347,17 +275,15 @@ function showLoading(element, isLoading) {
   }
 }
 
-// Store original button text
 function storeOriginalText(button) {
   if (!button.getAttribute('data-original-text')) {
     button.setAttribute('data-original-text', button.textContent);
   }
 }
-// DRAG & DROP FOR ENCRYPT SECTION
+
 const encryptDropArea = document.getElementById('encryptDropArea');
 const encryptFileInput = document.getElementById('encryptFile');
 
-// Prevent default drag behaviors
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   encryptDropArea.addEventListener(eventName, (e) => {
     e.preventDefault();
@@ -365,40 +291,33 @@ const encryptFileInput = document.getElementById('encryptFile');
   }, false);
 });
 
-// Highlight when file is dragged over
 ['dragenter', 'dragover'].forEach(eventName => {
   encryptDropArea.addEventListener(eventName, () => {
     encryptDropArea.classList.add('active');
   }, false);
 });
 
-// Remove highlight when file leaves or is dropped
 ['dragleave', 'drop'].forEach(eventName => {
   encryptDropArea.addEventListener(eventName, () => {
     encryptDropArea.classList.remove('active');
   }, false);
 });
 
-// Handle drop
 encryptDropArea.addEventListener('drop', (e) => {
   const dt = e.dataTransfer;
   const files = dt.files;
 
   if (files.length) {
     encryptFileInput.files = files;
-    // Trigger preview by simulating change event
     const event = new Event('change', { bubbles: true });
     encryptFileInput.dispatchEvent(event);
   }
 });
 
-// Click on area to open file picker
 encryptDropArea.addEventListener('click', () => {
   encryptFileInput.click();
 });
 
-
-// Encryption process
 encryptBtn.addEventListener('click', async () => {
   const file = fileInput.files[0];
   const password = encryptPassword.value;
@@ -421,8 +340,6 @@ encryptBtn.addEventListener('click', async () => {
     reader.onload = async function (event) {
       try {
         const fileData = event.target.result;
-
-        // Encrypt the file
         const salt = crypto.getRandomValues(new Uint8Array(16));
         const iv = crypto.getRandomValues(new Uint8Array(12));
         const key = await deriveKey(password, salt);
@@ -433,39 +350,23 @@ encryptBtn.addEventListener('click', async () => {
           fileData
         );
         
-        // Prepare encrypted content for download or further use
         const encryptedContent = {
           salt: arrayBufferToBase64(salt),
           iv: arrayBufferToBase64(iv),
           ciphertext: arrayBufferToBase64(encryptedData),
           filename: file.name,
-          type: file.type, // Store the file type for proper decryption
-          size: file.size, // Store original size for verification
-          timestamp: new Date().toISOString() // Add timestamp for reference
+          type: file.type,
+          size: file.size,
+          timestamp: new Date().toISOString()
         };
 
-        // Convert encrypted content to JSON text
         const encryptedText = JSON.stringify(encryptedContent);
-
-        // Create encrypted file for download
         const blob = new Blob([encryptedText], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${file.name}.encrypted.json`;
-        document.body.appendChild(a); // Append to body to ensure it works in all browsers
-        a.click();
-        document.body.removeChild(a);
-        
-        // Reset everything after download starts
-        setTimeout(() => {
-          URL.revokeObjectURL(url);
-          showLoading(encryptBtn, false);
-          showNotification("File encrypted and downloaded successfully!", "info");
-          
-          // Reset the form instead of switching tabs
-          document.getElementById('resetEncryptBtn').click();
-        }, 500);
+
+        showStorageOptionNotification(blob, file.name);
+
+        showLoading(encryptBtn, false);
+        document.getElementById('resetEncryptBtn').click();
         
       } catch (innerError) {
         console.error("Error in file processing:", innerError);
@@ -487,13 +388,10 @@ encryptBtn.addEventListener('click', async () => {
     showLoading(encryptBtn, false);
   }
 });
-// Replace the decryption logic with this improved version
 
-// Drag and drop functionality
 const decryptDropArea = document.getElementById('decryptDropArea');
 const decryptFileInput = document.getElementById('decryptFile');
 
-// Prevent default behavior for drag events
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   decryptDropArea.addEventListener(eventName, preventDefaults, false);
 });
@@ -503,7 +401,6 @@ function preventDefaults(e) {
   e.stopPropagation();
 }
 
-// Highlight drop area when item is dragged over it
 ['dragenter', 'dragover'].forEach(eventName => {
   decryptDropArea.addEventListener(eventName, highlight, false);
 });
@@ -520,7 +417,6 @@ function unhighlight() {
   decryptDropArea.classList.remove('active');
 }
 
-// Handle dropped files
 decryptDropArea.addEventListener('drop', handleDrop, false);
 
 function handleDrop(e) {
@@ -533,19 +429,16 @@ function handleDrop(e) {
   }
 }
 
-// Click on drop area to select file
 decryptDropArea.addEventListener('click', () => {
   decryptFileInput.click();
 });
 
-// Show file name when selected with file input
 decryptFileInput.addEventListener('change', () => {
   if (decryptFileInput.files.length) {
     displayFileName(decryptFileInput.files[0].name);
   }
 });
 
-// Show selected file name
 function displayFileName(name) {
   const messageElement = decryptDropArea.querySelector('.drag-drop-message');
   messageElement.innerHTML = `
@@ -555,29 +448,21 @@ function displayFileName(name) {
   `;
 }
 
-// Toggle password visibility for decrypt
 const decryptPasswordInput = document.getElementById("decryptPassword");
 const toggleDecryptEye = document.getElementById("toggleDecryptEye");
 
 toggleDecryptEye.addEventListener("click", () => {
   const isHidden = decryptPasswordInput.type === "password";
   decryptPasswordInput.type = isHidden ? "text" : "password";
-
   toggleDecryptEye.classList.toggle("bx-show", !isHidden);
   toggleDecryptEye.classList.toggle("bx-hide", isHidden);
 });
 
-// Reset functionality for decrypt section
 document.getElementById('resetDecryptBtn').addEventListener('click', () => {
-  // Clear decrypt file input
   decryptFileInput.value = '';
-  // Clear decrypt password
   decryptPasswordInput.value = '';
-  // Hide decrypt preview
   decryptPreview.style.display = 'none';
-  // Revoke any existing object URLs
   revokeAllObjectURLs();
-  // Reset drag drop area
   const messageElement = decryptDropArea.querySelector('.drag-drop-message');
   messageElement.innerHTML = `
     <i class='bx bx-upload'></i>
@@ -587,7 +472,6 @@ document.getElementById('resetDecryptBtn').addEventListener('click', () => {
   `;
 });
 
-// Decryption Logic
 const decryptBtn = document.getElementById('decryptBtn');
 decryptBtn.addEventListener('click', async () => {
   const password = document.getElementById('decryptPassword').value;
@@ -617,12 +501,10 @@ decryptBtn.addEventListener('click', async () => {
       return;
     }
 
-    // Validate required properties
     if (!encryptedData.salt || !encryptedData.iv || !encryptedData.ciphertext) {
       throw new Error("Encrypted data is missing required properties");
     }
 
-    // Decrypt the file
     const salt = base64ToArrayBuffer(encryptedData.salt);
     const iv = base64ToArrayBuffer(encryptedData.iv);
     const ciphertext = base64ToArrayBuffer(encryptedData.ciphertext);
@@ -634,16 +516,13 @@ decryptBtn.addEventListener('click', async () => {
       ciphertext
     );
 
-    // Create a Blob of the decrypted content with the correct MIME type
     const fileType = encryptedData.type || 'application/octet-stream';
     const decryptedBlob = new Blob([decrypted], { type: fileType });
     
-    // Clear previous content and URLs
     const previewContent = document.getElementById('previewContent');
     previewContent.innerHTML = '';
     revokeAllObjectURLs();
 
-    // Show preview based on file type
     const url = URL.createObjectURL(decryptedBlob);
     activeObjectURLs.push(url);
     
@@ -660,7 +539,6 @@ decryptBtn.addEventListener('click', async () => {
                fileType.startsWith('application/json') || 
                encryptedData.filename.endsWith('.txt') || 
                encryptedData.filename.endsWith('.json')) {
-      // For text files, show a preview
       const reader = new FileReader();
       reader.onload = (e) => {
         const textPreview = document.createElement('pre');
@@ -669,14 +547,11 @@ decryptBtn.addEventListener('click', async () => {
       };
       reader.readAsText(decryptedBlob);
     } else {
-      // For other file types, just show a message with file info
       previewContent.innerHTML = `<p>File "${encryptedData.filename}" (${fileType}) decrypted successfully. Size: ${(decryptedBlob.size / 1024).toFixed(2)} KB. Click the download button below.</p>`;
     }
 
-    // Show decrypt preview
     decryptPreview.style.display = 'block';
     
-    // Set up download button
     const downloadButton = document.getElementById('downloadButton');
     const newDownloadButton = downloadButton.cloneNode(true);
     downloadButton.parentNode.replaceChild(newDownloadButton, downloadButton);
@@ -689,10 +564,7 @@ decryptBtn.addEventListener('click', async () => {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-
-      // Optional: revoke after a delay to ensure download works
       setTimeout(() => URL.revokeObjectURL(downloadUrl), 3000);
-
       showNotification("File download started!", "info", 3000);
     });
     
@@ -704,32 +576,22 @@ decryptBtn.addEventListener('click', async () => {
     showLoading(decryptBtn, false);
   }
 });
-// Cleanup on page unload to prevent memory leaks
+
 window.addEventListener('beforeunload', revokeAllObjectURLs);
 
-
-
-
-
-
 const encryptPasswordInput = document.getElementById("encryptPassword");
-  const toggleEyeBtn = document.getElementById("toggleEncryptEye");
+const toggleEyeBtn = document.getElementById("toggleEncryptEye");
 
-  toggleEyeBtn.addEventListener("click", () => {
-    const isHidden = encryptPasswordInput.type === "password";
-    encryptPasswordInput.type = isHidden ? "text" : "password";
+toggleEyeBtn.addEventListener("click", () => {
+  const isHidden = encryptPasswordInput.type === "password";
+  encryptPasswordInput.type = isHidden ? "text" : "password";
+  toggleEyeBtn.classList.toggle("bx-show", !isHidden);
+  toggleEyeBtn.classList.toggle("bx-hide", isHidden);
+});
 
-    toggleEyeBtn.classList.toggle("bx-show", !isHidden);
-    toggleEyeBtn.classList.toggle("bx-hide", isHidden);
-  });
-
-
-
-
-  // 🔍 1. Detect device performance tier
 function getDevicePerformanceTier() {
   const ua = navigator.userAgent;
-  const ram = navigator.deviceMemory || 4; // default fallback if not supported
+  const ram = navigator.deviceMemory || 4;
   const cores = navigator.hardwareConcurrency || 4;
 
   if (ram <= 2 || cores <= 2 || /Android 5|iPhone 6|iPad mini|Moto E/.test(ua)) {
@@ -741,11 +603,8 @@ function getDevicePerformanceTier() {
   }
 }
 
-
-// 💬 2. Show center-screen device capability notification
 function showDeviceLimitNotification() {
   const { tier, maxFileSizeMB } = getDevicePerformanceTier();
-
   const midNotice = document.createElement('div');
   midNotice.style.position = 'fixed';
   midNotice.style.top = '50%';
@@ -765,7 +624,6 @@ function showDeviceLimitNotification() {
   midNotice.style.transition = 'opacity 0.5s ease-in-out';
   midNotice.style.position = 'fixed';
 
-  // Add close button
   const closeButton = document.createElement('span');
   closeButton.textContent = '×';
   closeButton.style.position = 'absolute';
@@ -789,11 +647,8 @@ function showDeviceLimitNotification() {
   midNotice.appendChild(closeButton);
 
   document.body.appendChild(midNotice);
-
-  // Fade in
   setTimeout(() => midNotice.style.opacity = '1', 100);
 
-  // Auto-remove after 8 seconds (optional, can remove if you want only manual close)
   setTimeout(() => {
     midNotice.style.opacity = '0';
     setTimeout(() => {
@@ -802,9 +657,343 @@ function showDeviceLimitNotification() {
   }, 8000);
 }
 
-
-
-// 🧠 Call this on page load
 window.addEventListener('DOMContentLoaded', () => {
   showDeviceLimitNotification();
 });
+
+// ⭐ NEW: Function to show the premium upgrade prompt
+function showPremiumPrompt() {
+  const premiumNotif = document.createElement('div');
+  premiumNotif.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    background: linear-gradient(135deg, #f368e0 0%, #ff9f43 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  `;
+
+  premiumNotif.innerHTML = `
+    <div style="font-size: 24px; margin-bottom: 10px;">⭐</div>
+    <h3 style="margin: 0 0 10px 0;">Free Limit Reached</h3>
+    <p style="margin: 0 0 20px 0; font-size: 14px;">
+      You've saved the maximum of 3 files. Please upgrade to save more.
+    </p>
+    <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+      <h4 style="margin:0 0 5px 0;">Purchase Premium</h4>
+      <p style="margin:0; font-size: 12px; opacity: 0.8;">Pricing for premium will be available soon!</p>
+    </div>
+    <button class="storage-btn secondary-btn" id="closePremiumPrompt" style="margin-top: 20px;">
+      Got it
+    </button>
+  `;
+
+  document.body.appendChild(premiumNotif);
+
+  document.getElementById('closePremiumPrompt').onclick = () => {
+    premiumNotif.remove();
+  };
+}
+
+// ⭐ NEW: Function to get the number of files a user has stored
+async function getUserFileCount(userId) {
+  if (!userId) {
+    console.error("User ID is required to count files.");
+    return 0;
+  }
+  
+  const { data, error } = await supabase.storage
+    .from("user-files")
+    .list(`users/${userId}`);
+
+  if (error) {
+    console.error("Error fetching file list:", error);
+    return 0; 
+  }
+  
+  return data ? data.length : 0;
+}
+
+
+function showStorageOptionNotification(encryptedBlob, originalFileName) {
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    animation: slideIn 0.3s ease-out;
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+    .storage-btn {
+      margin: 8px 5px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+    .primary-btn {
+      background: #00d4ff;
+      color: white;
+    }
+    .primary-btn:hover {
+      background: #00b8e6;
+      transform: translateY(-1px);
+    }
+    .secondary-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    .secondary-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .rename-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      font-size: 14px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  notification.innerHTML = `
+    <div style="margin-bottom: 15px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">🎉</div>
+      <h3 style="margin: 0 0 10px 0; font-size: 18px;">File Encrypted Successfully!</h3>
+      <p style="margin: 0; font-size: 14px; opacity: 0.9;">
+        Want to save it to your cloud account for easy access across devices?
+      </p>
+    </div>
+    
+    <div id="storageOptions">
+      <button class="storage-btn primary-btn" id="saveToCloud">
+        ☁️ Save to Cloud
+      </button>
+      <button class="storage-btn secondary-btn" id="downloadOnly">
+        📥 Download Only
+      </button>
+    </div>
+    
+    <div id="renameSection" style="display: none; margin-top: 15px;">
+      <input type="text" class="rename-input" id="customFileName" 
+             placeholder="Enter file name (optional)" 
+             value="${originalFileName}">
+      <div>
+        <button class="storage-btn primary-btn" id="confirmSave">Save</button>
+        <button class="storage-btn secondary-btn" id="cancelSave">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(notification);
+  
+  function removeNotification() {
+    notification.style.opacity = '0';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }
+
+  // ⭐ MODIFIED: Button click handler with file limit check
+  document.getElementById('saveToCloud').onclick = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      removeNotification();
+      showLoginPrompt();
+      return;
+    }
+
+    // Check file count before proceeding
+    const fileCount = await getUserFileCount(user.id);
+    const FREE_TIER_LIMIT = 5;
+
+    if (fileCount >= FREE_TIER_LIMIT) {
+      removeNotification(); // Close the current modal
+      showPremiumPrompt();  // Show the premium upgrade modal
+      return; // Stop the process
+    }
+
+    // If under limit, proceed to rename/save
+    document.getElementById('storageOptions').style.display = 'none';
+    document.getElementById('renameSection').style.display = 'block';
+  };
+
+  document.getElementById('downloadOnly').onclick = () => {
+    removeNotification();
+    downloadFile(encryptedBlob, `${originalFileName}.encrypted.json`);
+  };
+
+  document.getElementById('confirmSave').onclick = async () => {
+    const customName = document.getElementById('customFileName').value.trim();
+    const finalName = customName || originalFileName;
+
+    const confirmButton = document.getElementById('confirmSave');
+    confirmButton.textContent = 'Saving...';
+    confirmButton.disabled = true;
+
+    try {
+      await saveToCloud(encryptedBlob, finalName);
+      removeNotification();
+      showSuccessNotification('File saved to cloud and downloaded! 🎉');
+      downloadFile(encryptedBlob, `${finalName}.encrypted.json`);
+    } catch (error) {
+      console.error('Error saving to cloud:', error);
+      showNotification('Failed to save to cloud. File downloaded instead.', 'error');
+      downloadFile(encryptedBlob, `${finalName}.encrypted.json`);
+      removeNotification();
+    }
+  };
+
+  document.getElementById('cancelSave').onclick = () => {
+    removeNotification();
+    downloadFile(encryptedBlob, `${originalFileName}.encrypted.json`);
+  };
+
+  setTimeout(() => {
+    if (notification.parentNode) {
+      removeNotification();
+      downloadFile(encryptedBlob, `${originalFileName}.encrypted.json`);
+    }
+  }, 30000);
+}
+
+function showLoginPrompt() {
+  const loginNotif = document.createElement('div');
+  loginNotif.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  `;
+
+  loginNotif.innerHTML = `
+    <div style="font-size: 24px; margin-bottom: 10px;">🔐</div>
+    <h3 style="margin: 0 0 10px 0;">Login Required</h3>
+    <p style="margin: 0 0 20px 0; font-size: 14px;">
+      Please login to save files to your cloud account
+    </p>
+    <button class="storage-btn primary-btn" onclick="window.location.href='login.html'">
+      Login Now
+    </button>
+    <button class="storage-btn secondary-btn" id="skipLogin">
+      Skip & Download
+    </button>
+  `;
+
+  document.body.appendChild(loginNotif);
+
+  document.getElementById('skipLogin').onclick = () => {
+    loginNotif.remove();
+  };
+
+  setTimeout(() => {
+    if (loginNotif.parentNode) {
+      loginNotif.remove();
+    }
+  }, 15000);
+}
+
+async function saveToCloud(encryptedBlob, fileName) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('User not authenticated');
+
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const uniqueFileName = `${fileName}_${timestamp}.encrypted.json`;
+  const filePath = `users/${user.id}/${uniqueFileName}`;
+
+  const { data, error } = await supabase.storage
+    .from('user-files')
+    .upload(filePath, encryptedBlob, {
+      contentType: 'application/json',
+      upsert: false
+    });
+
+  if (error) {
+    console.error('Supabase upload error:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+function downloadFile(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+a.click();
+  document.body.removeChild(a);
+  
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function showSuccessNotification(message) {
+  const successNotif = document.createElement('div');
+  successNotif.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: linear-gradient(135deg, #00d4ff 0%, #5b73e8 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    max-width: 350px;
+    animation: slideIn 0.3s ease-out;
+  `;
+  
+  successNotif.textContent = message;
+  document.body.appendChild(successNotif);
+  
+  setTimeout(() => {
+    successNotif.style.opacity = '0';
+    setTimeout(() => successNotif.remove(), 300);
+  }, 4000);
+}
