@@ -660,47 +660,7 @@ window.addEventListener('DOMContentLoaded', () => {
   showDeviceLimitNotification();
 });
 
-// ⭐ NEW: Function to show the premium upgrade prompt
-function showPremiumPrompt() {
-  const premiumNotif = document.createElement('div');
-  premiumNotif.style.cssText = `
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10001;
-    background: linear-gradient(135deg, #f368e0 0%, #ff9f43 100%);
-    color: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-  `;
 
-  premiumNotif.innerHTML = `
-    <div style="font-size: 24px; margin-bottom: 10px;">⭐</div>
-    <h3 style="margin: 0 0 10px 0;">Free Limit Reached</h3>
-    <p style="margin: 0 0 20px 0; font-size: 14px;">
-      You've saved the maximum of 3 files. Please upgrade to save more.
-    </p>
-    <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
-      <h4 style="margin:0 0 5px 0;">Purchase Premium</h4>
-      <p style="margin:0; font-size: 12px; opacity: 0.8;">Pricing for premium will be available soon!</p>
-    </div>
-    <button class="storage-btn secondary-btn" id="closePremiumPrompt" style="margin-top: 20px;">
-      Got it
-    </button>
-  `;
-
-  document.body.appendChild(premiumNotif);
-
-  document.getElementById('closePremiumPrompt').onclick = () => {
-    premiumNotif.remove();
-  };
-}
 
 // ⭐ NEW: Function to get the number of files a user has stored
 async function getUserFileCount(userId) {
@@ -721,7 +681,6 @@ async function getUserFileCount(userId) {
   return data ? data.length : 0;
 }
 
-
 function showStorageOptionNotification(encryptedBlob, originalFileName) {
   const notification = document.createElement('div');
   notification.style.cssText = `
@@ -730,16 +689,18 @@ function showStorageOptionNotification(encryptedBlob, originalFileName) {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10000;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 2px solid #00d4ff;
     color: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-width: 450px;
-    width: 90%;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 212, 255, 0.15), 0 0 40px rgba(0, 212, 255, 0.1);
+    max-width: 480px;
+    width: 92%;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     animation: slideIn 0.3s ease-out;
+    backdrop-filter: blur(10px);
   `;
 
   const style = document.createElement('style');
@@ -749,55 +710,121 @@ function showStorageOptionNotification(encryptedBlob, originalFileName) {
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
     .storage-btn {
-      margin: 8px 5px;
-      padding: 12px 20px;
+      margin: 8px 6px;
+      padding: 14px 24px;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
       font-size: 14px;
+      position: relative;
+      overflow: hidden;
     }
     .primary-btn {
-      background: #00d4ff;
+      background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
       color: white;
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
     }
     .primary-btn:hover {
-      background: #00b8e6;
-      transform: translateY(-1px);
+      background: linear-gradient(135deg, #0099cc 0%, #007aa3 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
     }
     .secondary-btn {
-      background: rgba(255,255,255,0.2);
-      color: white;
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255,255,255,0.3);
     }
     .secondary-btn:hover {
-      background: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-1px);
     }
     .rename-input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.9);
-      color: #333;
+      width: calc(100% - 20px);
+      padding: 14px;
+      margin: 15px 0;
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      color: white;
       font-size: 14px;
+      backdrop-filter: blur(5px);
+    }
+    .rename-input:focus {
+      outline: none;
+      border-color: #00d4ff;
+      background: rgba(255,255,255,0.1);
+    }
+    .rename-input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+    .beta-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 8px;
+      box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+    }
+    .trust-info {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 20px 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .beta-warning {
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 12px;
+      color: #ffc107;
     }
   `;
   document.head.appendChild(style);
 
   notification.innerHTML = `
-    <div style="margin-bottom: 15px;">
-      <div style="font-size: 24px; margin-bottom: 8px;">🎉</div>
-      <h3 style="margin: 0 0 10px 0; font-size: 18px;">File Encrypted Successfully!</h3>
-      <p style="margin: 0; font-size: 14px; opacity: 0.9;">
-        Want to save it to your cloud account for easy access across devices?
+    <div style="margin-bottom: 20px;">
+      <div style="font-size: 28px; margin-bottom: 12px;">🎉</div>
+      <h3 style="margin: 0 0 12px 0; font-size: 20px; font-weight: 600;">
+        File Encrypted Successfully!
+        <span class="beta-badge">BETA</span>
+      </h3>
+      <p style="margin: 0; font-size: 15px; opacity: 0.85; color: #e0e0e0;">
+        Secure cloud backup for cross-device access?
       </p>
+    </div>
+    
+    <div class="trust-info">
+      <div style="font-weight: 600; margin-bottom: 8px; color: #00d4ff;">
+        🔒 Why backup encrypted files?
+      </div>
+      <div style="margin-bottom: 10px; text-align: left; color: #f0f0f0;">
+        ✓ Device lost/stolen? Access from anywhere<br>
+        ✓ File accidentally deleted? Safe backup<br>
+        ✓ Need on multiple devices? One-click access
+      </div>
+      <div style="font-weight: 600; color: #00d4ff; font-size: 13px;">
+        🛡️ We only store encrypted data - impossible to decrypt without your password
+      </div>
+    </div>
+
+    <div class="beta-warning">
+      <strong>⚠️ Beta Phase:</strong> Max 2 files • 20MB total storage
     </div>
     
     <div id="storageOptions">
       <button class="storage-btn primary-btn" id="saveToCloud">
-        ☁️ Save to Cloud
+        ☁️ Backup Encrypted File
       </button>
       <button class="storage-btn secondary-btn" id="downloadOnly">
         📥 Download Only
@@ -809,7 +836,7 @@ function showStorageOptionNotification(encryptedBlob, originalFileName) {
              placeholder="Enter file name (optional)" 
              value="${originalFileName}">
       <div>
-        <button class="storage-btn primary-btn" id="confirmSave">Save</button>
+        <button class="storage-btn primary-btn" id="confirmSave">Save to Cloud</button>
         <button class="storage-btn secondary-btn" id="cancelSave">Cancel</button>
       </div>
     </div>
@@ -826,7 +853,7 @@ function showStorageOptionNotification(encryptedBlob, originalFileName) {
     }, 300);
   }
 
-  // ⭐ MODIFIED: Button click handler with file limit check
+  // Button click handler with updated file limit check
   document.getElementById('saveToCloud').onclick = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
@@ -835,20 +862,116 @@ function showStorageOptionNotification(encryptedBlob, originalFileName) {
       return;
     }
 
-    // Check file count before proceeding
-    const fileCount = await getUserFileCount(user.id);
-    const FREE_TIER_LIMIT = 5;
+    // Check file count and total size before proceeding
+    const { fileCount, totalSize } = await getUserStorageInfo(user.id);
+    const BETA_FILE_LIMIT = 2;
+    const BETA_SIZE_LIMIT = 20 * 1024 * 1024; // 20MB in bytes
+    const currentFileSize = encryptedBlob.size;
 
-    if (fileCount >= FREE_TIER_LIMIT) {
-      removeNotification(); // Close the current modal
-      showPremiumPrompt();  // Show the premium upgrade modal
-      return; // Stop the process
+    if (fileCount >= BETA_FILE_LIMIT) {
+      removeNotification();
+      showBetaLimitPrompt('files');
+      return;
     }
 
-    // If under limit, proceed to rename/save
+    if (totalSize + currentFileSize > BETA_SIZE_LIMIT) {
+      removeNotification();
+      showBetaLimitPrompt('size');
+      return;
+    }
+
+    // If under limits, proceed to rename/save
     document.getElementById('storageOptions').style.display = 'none';
     document.getElementById('renameSection').style.display = 'block';
   };
+
+// Updated getUserStorageInfo function
+async function getUserStorageInfo(userId) {
+  if (!userId) {
+    console.error("User ID is required to get storage info.");
+    return { fileCount: 0, totalSize: 0 };
+  }
+  
+  const { data, error } = await supabase.storage
+    .from("user-files")
+    .list(`users/${userId}`);
+
+  if (error) {
+    console.error("Error fetching file list:", error);
+    return { fileCount: 0, totalSize: 0 };
+  }
+  
+  const fileCount = data ? data.length : 0;
+  const totalSize = data ? data.reduce((sum, file) => sum + (file.metadata?.size || 0), 0) : 0;
+  
+  return { fileCount, totalSize };
+}
+
+// Updated beta limit prompt
+function showBetaLimitPrompt(limitType) {
+  const limitNotif = document.createElement('div');
+  limitNotif.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 2px solid #ff4757;
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(255, 71, 87, 0.15), 0 0 40px rgba(255, 71, 87, 0.1);
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    backdrop-filter: blur(10px);
+  `;
+
+  const limitMessage = limitType === 'files' 
+    ? 'You\'ve reached the beta limit of 2 files.' 
+    : 'Adding this file would exceed the 20MB beta storage limit.';
+
+  limitNotif.innerHTML = `
+    <div style="font-size: 28px; margin-bottom: 15px;">⚠️</div>
+    <h3 style="margin: 0 0 15px 0; font-weight: 600; color: #ff4757;">Beta Limit Reached</h3>
+    <p style="margin: 0 0 20px 0; font-size: 15px; color: #e0e0e0;">
+      ${limitMessage}
+    </p>
+    <div style="background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); padding: 16px; border-radius: 12px; margin: 20px 0;">
+      <h4 style="margin:0 0 10px 0; color: #00d4ff;">🔒 Your encrypted files remain secure</h4>
+      <p style="margin:0; font-size: 13px; color: #f0f0f0; line-height: 1.4;">
+        Download and decrypt them anytime on any device using your password
+      </p>
+    </div>
+    <p style="margin:0 0 10px 0;">Option for <span style="color: #00d4ff;">Premium </span>will be</p>
+    <button style="
+      margin-top: 20px;
+      padding: 14px 24px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      background: transparent;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    " id="closeLimitPrompt" 
+    onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.borderColor='rgba(255,255,255,0.5)'"
+    onmouseout="this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.3)'">
+      Got it - Continue Download
+    </button>
+  `;
+
+  document.body.appendChild(limitNotif);
+
+  document.getElementById('closeLimitPrompt').onclick = () => {
+    downloadFile(encryptedBlob, `${originalFileName}.encrypted.json`);
+    
+    limitNotif.remove();
+  };
+}
 
   document.getElementById('downloadOnly').onclick = () => {
     removeNotification();
@@ -866,11 +989,11 @@ function showStorageOptionNotification(encryptedBlob, originalFileName) {
     try {
       await saveToCloud(encryptedBlob, finalName);
       removeNotification();
-      showSuccessNotification('File saved to cloud and downloaded! 🎉');
+      showSuccessNotification('File backed up to cloud and downloaded! 🎉');
       downloadFile(encryptedBlob, `${finalName}.encrypted.json`);
     } catch (error) {
       console.error('Error saving to cloud:', error);
-      showNotification('Failed to save to cloud. File downloaded instead.', 'error');
+      showNotification('Failed to backup to cloud. File downloaded instead.', 'error');
       downloadFile(encryptedBlob, `${finalName}.encrypted.json`);
       removeNotification();
     }
