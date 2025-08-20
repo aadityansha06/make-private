@@ -168,8 +168,8 @@
     <div id="messageBox" class="message-box"></div>
   </div>
 </div>
- 
-<!-- Auth Logic -->
+
+
 <script type="module">
   import { supabase } from "./supabaseClient.js";
 
@@ -178,21 +178,35 @@
   const signupBtn = document.getElementById("signupBtn");
   const googleBtn = document.getElementById("googleBtn");
   const messageBox = document.getElementById("messageBox");
- const titleText = document.getElementsByTagName("h2");
-  function showMessage(text, type="success") {
+
+  function showMessage(text, type = "success") {
     messageBox.textContent = text;
     messageBox.className = "message-box " + (type === "success" ? "message-success" : "message-error");
     messageBox.style.display = "block";
   }
 
+  // Check if user is already logged in
+  document.addEventListener('DOMContentLoaded', async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      console.log('User already logged in, redirecting...');
+      window.location.href = "/index.html";
+      return;
+    }
+  });
+
   // Magic link login (existing user)
   loginBtn.addEventListener("click", async () => {
-    const email = emailInput.value;
+    const email = emailInput.value.trim();
     if (!email) return showMessage("⚠️ Please enter your email.", "error");
+    
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.origin + "/index.html" }
+        options: { 
+          emailRedirectTo: `${window.location.origin}/index.html`,
+          shouldCreateUser: false // Only login existing users
+        }
       });
       if (error) throw error;
       showMessage("👋 Welcome back! Check your email for the login link.");
@@ -203,16 +217,19 @@
 
   // Signup also sends magic link
   signupBtn.addEventListener("click", async () => {
-    const email = emailInput.value;
-
+    const email = emailInput.value.trim();
     if (!email) return showMessage("⚠️ Please enter your email.", "error");
+    
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.origin + "/index.html" }
+        options: { 
+          emailRedirectTo: `${window.location.origin}/index.html`,
+          shouldCreateUser: true // Allow creating new users
+        }
       });
       if (error) throw error;
-      showMessage("🎉 Welcome, first time here! Check your email to confirm.");
+      showMessage("🎉 Welcome! Check your email to confirm and get started.");
     } catch (err) {
       showMessage("❌ " + err.message, "error");
     }
@@ -221,7 +238,12 @@
   // Google Sign-In
   googleBtn.addEventListener("click", async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+      const { error } = await supabase.auth.signInWithOAuth({ 
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/index.html`
+        }
+      });
       if (error) throw error;
       // Supabase handles redirect
     } catch (err) {

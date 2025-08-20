@@ -1,643 +1,457 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <!-- Primary Meta Tags -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Make it Private - Encrypt Photos & Videos Securely | Client-Side File Encryption Tool</title>
-<meta name="description" content="Secure client-side file encryption tool that converts your private photos and videos into encrypted text. 100% browser-based, zero server storage, password-protected file encryption by 17-year-old developer Aadityansha.">
-<meta name="keywords" content="file encryption, photo encryption, video encryption, client-side encryption, browser encryption, privacy tool, secure files, password protection, encrypted files, private photos, secure videos, zero knowledge encryption, open source encryption, student developer, Aadityansha">
-<meta name="author" content="Aadityansha Verma">
-<meta name="robots" content="index, follow">
-<meta name="language" content="English">
-<meta name="revisit-after" content="7 days">
+  <!-- Primary Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Make it Private - Encrypt Photos & Videos Securely | Client-Side File Encryption Tool</title>
+  <meta name="description" content="Secure client-side file encryption tool that converts your private photos and videos into encrypted text. 100% browser-based, zero server storage, password-protected file encryption by 17-year-old developer Aadityansha." />
+  <meta name="keywords" content="file encryption, photo encryption, video encryption, client-side encryption, browser encryption, privacy tool, secure files, password protection, encrypted files, private photos, secure videos, zero knowledge encryption, open source encryption, student developer, Aadityansha" />
+  <meta name="author" content="Aadityansha Verma" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://make-private.vercel.app/">
-<meta property="og:title" content="Make it Private - Secure File Encryption Tool">
-<meta property="og:description" content="Convert your sensitive photos and videos into encrypted text files. 100% client-side encryption ensures your privacy. No server storage, password-protected, hack-proof security.">
-<meta property="og:image" content="https://make-private.vercel.app/thumbnail.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="Make it Private">
-<meta property="og:locale" content="en_US">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://make-private.vercel.app/" />
+  <meta property="og:title" content="Make it Private - Secure File Encryption Tool" />
+  <meta property="og:description" content="Convert your sensitive photos and videos into encrypted text files. 100% client-side encryption ensures your privacy. No server storage, password-protected, hack-proof security." />
+  <meta property="og:image" content="https://make-private.vercel.app/thumbnail.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Make it Private" />
+  <meta property="og:locale" content="en_US" />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://make-private.vercel.app/">
-<meta property="twitter:title" content="Make it Private - Secure File Encryption Tool">
-<meta property="twitter:description" content="Convert your sensitive photos and videos into encrypted text files. 100% client-side encryption ensures your privacy.">
-<meta property="twitter:image" content="https://make-private.vercel.app/thumbnail.png">
-<meta property="twitter:creator" content="@aadityansha06">
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://make-private.vercel.app/" />
+  <meta property="twitter:title" content="Make it Private - Secure File Encryption Tool" />
+  <meta property="twitter:description" content="Convert your sensitive photos and videos into encrypted text files. 100% client-side encryption ensures your privacy." />
+  <meta property="twitter:image" content="https://make-private.vercel.app/thumbnail.png" />
+  <meta property="twitter:creator" content="@aadityansha06" />
 
-<!-- Additional SEO Meta Tags -->
-<meta name="theme-color" content="#00acfc">
-<meta name="msapplication-TileColor" content="#00acfc">
-<meta name="application-name" content="Make it Private">
-<meta name="apple-mobile-web-app-title" content="Make it Private">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- PWA / SEO Meta -->
+  <meta name="theme-color" content="#00acfc" />
+  <meta name="msapplication-TileColor" content="#00acfc" />
+  <meta name="application-name" content="Make it Private" />
+  <meta name="apple-mobile-web-app-title" content="Make it Private" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
+  <!-- Structured Data for Rich Snippets -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Make it Private",
+      "description": "Secure client-side file encryption tool that converts private photos and videos into encrypted text files",
+      "url": "https://make-private.vercel.app/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Web Browser",
+      "author": { "@type": "Person", "name": "Aadityansha Verma" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "Client-side file encryption",
+        "Password protection",
+        "Zero server storage",
+        "Open source",
+        "Browser-based encryption"
+      ]
+    }
+  </script>
 
+  <!-- Security Headers (CSP modernized to allow Supabase & fonts) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
+                 font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
+                 img-src 'self' data: blob: https:;
+                 connect-src 'self' https://*.supabase.co https://*.supabase.in https://*.supabase.net https://*.supabase.com;
+                 frame-ancestors 'none';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <!-- X-Frame-Options is superseded by frame-ancestors in CSP, so we omit it to avoid conflicts. -->
 
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 
-<!-- Structured Data for Rich Snippets -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Make it Private",
-  "description": "Secure client-side file encryption tool that converts private photos and videos into encrypted text files",
-  "url": "https://make-private.vercel.app/",
-  "applicationCategory": "SecurityApplication",
-  "operatingSystem": "Web Browser",
-  "author": {
-    "@type": "Person",
-    "name": "Aadityansha Verma",
-    "age": 18
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "featureList": [
-    "Client-side file encryption",
-    "Password protection",
-    "Zero server storage",
-    "Open source",
-    "Browser-based encryption"
-  ]
-}
-</script>
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
 
-<!-- Additional Security Headers -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:;">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-
-<!-- Preconnect for Performance -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-
-<!-- DNS Prefetch -->
-<link rel="dns-prefetch" href="//fonts.googleapis.com">
-<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Meow+Script&family=Offside&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Lobster&display=swap" rel="stylesheet">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Meow+Script&family=Offside&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=business_center" />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css">
+  <!-- App CSS -->
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    /* Your existing styles */
-    .topbar {
-      display: flex;
-      justify-content: flex-end; /* push avatar to right */
-      align-items: center;
-      padding: 1rem;
-    }
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #007bff, #00c6ff); /* A gradient for a better look */
-      color: #fff;
-      font-size: 2rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A softer shadow */
-    }
-    .avatar:hover {
-      transform: scale(1.1); /* Subtle zoom effect */
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 300px;
-      background: #111;
-      box-shadow: -4px 0 10px rgba(0,0,0,0.5);
-      transform: translateX(100%);
-      transition: transform 0.3s ease-in-out;
-      padding: 1rem;
-      z-index: 1000;
-    }
-    .sidebar.open {
-      transform: translateX(0);
-    }
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1rem;
-      color: #fff;
-      cursor: pointer;
-      position: absolute;
-      top: 10px;
-      right: 15px;
-    }
-    .sidebar h3 {
-      margin-top: 0;
-      color: rgba(0,172,252,1);
-    }
-    .sidebar button {
-      margin-top: 1rem;
-      padding: 0.6rem 1rem;
-      border: none;
-      border-radius: 8px;
-      background: rgba(0,172,252,1);
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .sidebar button:hover {
-      background: #0a8fbf;
-    }
-    .file-list {
-      margin-top: 1.5rem;
-    }
-    .file-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0.6rem 0;
-      padding: 0.6rem;
-      background: #1a1a1a;
-      border-radius: 8px;
-    }
-    .file-item button {
-      background: rgba(0,172,252,0.8);
-      border: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #fff;
-    }
+    .topbar { display: flex; justify-content: flex-end; align-items: center; padding: 1rem; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(45deg, #007bff, #00c6ff); color: #fff; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .3s ease-in-out, box-shadow .3s ease-in-out; box-shadow: 0 4px 8px rgba(0,0,0,.2); }
+    .avatar:hover { transform: scale(1.1); box-shadow: 0 6px 12px rgba(0,0,0,.3); }
+    .sidebar { position: fixed; top: 0; right: 0; height: 100%; width: 300px; background: #111; box-shadow: -4px 0 10px rgba(0,0,0,.5); transform: translateX(100%); transition: transform .3s ease-in-out; padding: 1rem; z-index: 1000; }
+    .sidebar.open { transform: translateX(0); }
+    .close-btn { background: none; border: none; font-size: 1rem; color: #fff; cursor: pointer; position: absolute; top: 10px; right: 15px; }
+    .sidebar h3 { margin-top: 0; color: rgba(0,172,252,1); }
+    .sidebar button { margin-top: 1rem; padding: .6rem 1rem; border: none; border-radius: 8px; background: rgba(0,172,252,1); color: #fff; font-weight: 600; cursor: pointer; }
+    .sidebar button:hover { background: #0a8fbf; }
+    .file-list { margin-top: 1.5rem; }
+    .file-item { display: flex; justify-content: space-between; align-items: center; margin: .6rem 0; padding: .6rem; background: #1a1a1a; border-radius: 8px; }
+    .file-item button { background: rgba(0,172,252,.8); border: none; padding: .4rem .8rem; border-radius: 6px; cursor: pointer; color: #fff; }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="topbar">
+      <button class="avatar" id="avatar" aria-label="Account">
+        <i class='bx bx-user' aria-hidden="true"></i>
+      </button>
+    </div>
 
- <!-- Navbar -->
-<div class="navbar">
-  <div class="topbar">
-  <div class="avatar" id="avatar"> <i class='bx bx-user'></i></div>
-</div>
+    <aside class="sidebar" id="sidebar" aria-hidden="true" aria-labelledby="avatar">
+      <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
+      <h3>Account</h3>
+      <p id="userEmail"></p>
+      <button id="logoutBtn">Log Out</button>
 
-<div class="sidebar" id="sidebar">
-    <button class="close-btn" id="closeSidebar">&times;</button>
-  <h3>Account</h3>
-  <p id="userEmail"></p>
-  <button id="logoutBtn">Log Out</button>
+      <div class="file-list" id="fileList">
+        <h4>Your Files</h4>
+        <!-- Files injected here -->
+      </div>
+    </aside>
 
-  <div class="file-list" id="fileList">
-    <h4>Your Files</h4>
-    <!-- Files injected here -->
+    <h1>Make it Private</h1>
+    <p class="tagline">🔐 <span>Because what matters is your privacy</span></p>
   </div>
-</div>
-  <h1>Make it Private</h1>
-  <p class="tagline">🔐 <span>Because What matter is - your privacy </span></p>
 
-</div>
-<p class="trust-line">🌸 <span>Your trust is the cost of using this tool 😊 </span>💙</p>
+  <p class="trust-line">🌸 <span>Your trust is the price of using this tool 😊</span> 💙</p>
 
+  <!-- Toggle Buttons -->
+  <div class="toggle-buttons" role="tablist" aria-label="Encrypt or Decrypt">
+    <button id="encryptTab" class="active" role="tab" aria-selected="true" aria-controls="encryptSection">Encrypt</button>
+    <button id="decryptTab" role="tab" aria-selected="false" aria-controls="decryptSection">Decrypt</button>
+  </div>
 
-
-<!-- Toggle Buttons -->
-<div class="toggle-buttons">
-  <button id="encryptTab" class="active">Encrypt</button>
-  <button id="decryptTab">Decrypt</button>
-</div>
-
-<!-- Encrypt Section -->
-<div id="encryptSection" class="content active">
-  
+  <!-- Encrypt Section -->
+  <section id="encryptSection" class="content active" role="tabpanel" aria-labelledby="encryptTab">
     <div class="drag-drop-area" id="encryptDropArea">
       <div class="drag-drop-message">
-        <i class='bx bx-upload'></i>
+        <i class='bx bx-upload' aria-hidden="true"></i>
         <p>Drag & drop your file here to encrypt</p>
         <p>OR</p>
         <label for="encryptFile" class="file-label">Choose File</label>
       </div>
       <input type="file" id="encryptFile" accept="image/*,video/*" />
     </div>
-  <div class="preview" id="encryptPreview"></div>
-  <div class="password-container">
-    <input type="password" id="encryptPassword" placeholder="Enter a strong password (at-least six digits)" />
-    <i class='bx bx-show toggle-eye' id="toggleEncryptEye"></i>
-  </div>
-  
-   
-  <div class="button-group">
-    <button class="action" id="encryptBtn">Encrypt</button>
-    <button class="reset" id="resetEncryptBtn">Reset</button>
-  </div>
-</div>
-
-<!-- Decrypt Section -->
-<div id="decryptSection" class="content">
-  <div class="drag-drop-area" id="decryptDropArea">
-    <div class="drag-drop-message">
-      <i class='bx bx-upload'></i>
-      <p>Drag & drop your encrypted file here</p>
-      <p>OR</p>
-      <label for="decryptFile" class="file-label">Choose File</label>
+    <div class="preview" id="encryptPreview" aria-live="polite"></div>
+    <div class="password-container">
+      <input type="password" id="encryptPassword" placeholder="Enter a strong password (at least 6 characters)" aria-label="Encryption password" />
+      <i class='bx bx-show toggle-eye' id="toggleEncryptEye" aria-hidden="true"></i>
     </div>
-    <input type="file" id="decryptFile" accept=".txt,.json" />
+    <div class="button-group">
+      <button class="action" id="encryptBtn">Encrypt</button>
+      <button class="reset" id="resetEncryptBtn">Reset</button>
+    </div>
+  </section>
+
+  <!-- Decrypt Section -->
+  <section id="decryptSection" class="content" role="tabpanel" aria-labelledby="decryptTab" hidden>
+    <div class="drag-drop-area" id="decryptDropArea">
+      <div class="drag-drop-message">
+        <i class='bx bx-upload' aria-hidden="true"></i>
+        <p>Drag & drop your encrypted file here</p>
+        <p>OR</p>
+        <label for="decryptFile" class="file-label">Choose File</label>
+      </div>
+      <input type="file" id="decryptFile" accept=".txt,.json" />
+    </div>
+    <div class="password-container">
+      <input type="password" id="decryptPassword" placeholder="Enter the password" aria-label="Decryption password" />
+      <i class='bx bx-show toggle-eye' id="toggleDecryptEye" aria-hidden="true"></i>
+    </div>
+    <div class="form-group checkbox-group">
+      <input type="checkbox" id="useSecurityQuestionDecrypt" class="custom-checkbox" />
+      <label for="useSecurityQuestionDecrypt">
+        <span style="color:#0dadf2;">Forgot password?</span> Use security question instead
+      </label>
+    </div>
+    <div id="decryptSecurityQuestionContainer" class="form-group" style="display:none;">
+      <div class="form-header">
+        <label id="decryptQuestionLabel" for="decryptSecurityQuestion">Security Question</label>
+      </div>
+      <select id="decryptSecurityQuestion" class="form-input">
+        <option value="first_crush">Who was your first crush?</option>
+        <option value="school_name">What was your first school name?</option>
+        <option value="first_pet">What was the name of your first pet?</option>
+        <option value="birth_city">In what city were you born?</option>
+        <option value="first_car">What was your first car?</option>
+      </select>
+      <input type="text" id="decryptSecurityAnswer" class="form-input" placeholder="Your answer" />
+    </div>
+    <div class="button-group">
+      <button class="action" id="decryptBtn">Decrypt</button>
+      <button class="reset" id="resetDecryptBtn">Reset</button>
+    </div>
+  </section>
+
+  <!-- Decrypted file preview and download button -->
+  <div id="decryptPreview" style="display:none;">
+    <h3>Decrypted Preview</h3>
+    <div id="previewContent"></div>
+    <button id="downloadButton">Download</button>
   </div>
-  <div class="password-container">
-    <input type="password" id="decryptPassword" placeholder="Enter the password" />
-    <i class='bx bx-show toggle-eye' id="toggleDecryptEye"></i>
+
+  <!-- Warning message (hidden by default) -->
+  <div id="fileSizeWarning" style="display:none; color:red;">
+    <p>Warning: This file is large, it may take longer to process. Proceed with caution.</p>
+    <button id="proceedButton">Proceed</button>
+    <button id="cancelButton">Cancel</button>
   </div>
-  <div class="form-group checkbox-group">
-       <input type="checkbox" id="useSecurityQuestionDecrypt" class="custom-checkbox">
-       <label for="useSecurityQuestionDecrypt"> <span style="color: #0dadf2;">Forgot password?</span> Use security question instead</label>
-     </div>
-     <div id="decryptSecurityQuestionContainer" class="form-group" style="display: none;">
-       <div class="form-header">
-         <label id="decryptQuestionLabel">Security Question</label>
-       </div>
-       <select id="decryptSecurityQuestion" class="form-input">
-         <option value="first_crush">Who was your first crush?</option> 
-         <option value="school_name">What was your first school name?</option>
-         <option value="first_pet">What was the name of your first pet?</option>
-         <option value="birth_city">In what city were you born?</option>
-         <option value="first_car">What was your first car?</option>
-       </select>
-       <input type="text" id="decryptSecurityAnswer" class="form-input" placeholder="Your answer">
-     </div>
-  <div class="button-group">
-    <button class="action" id="decryptBtn">Decrypt</button>
-    <button class="reset" id="resetDecryptBtn">Reset</button>
-  </div>
-</div>
-`
 
-<!-- Decrypted file preview and download button -->
-<div id="decryptPreview" style="display: none;">
-  <h3>Decrypted Preview</h3>
-  <div id="previewContent"></div>
-  <button id="downloadButton">Download</button>
-</div>
-
-<!-- Warning message (hidden by default) -->
-<div id="fileSizeWarning" style="display: none; color: red;">
-  <p>Warning: This file is large, it may take longer to process. Proceed with caution.</p>
-  <button id="proceedButton">Proceed</button>
-  <button id="cancelButton">Cancel</button>
-</div>
-
-
-<div class="container">
-   <h2>✨<span class="main-title"> What Makes This Tool Special</span>✨</h2> 
+  <div class="container">
+    <h2>✨<span class="main-title"> What Makes This Tool Special</span>✨</h2>
     <p class="subtitle">Replace your sensitive photos and videos with encrypted text files - unbreakable protection that only you control</p>
-<div class="demo-section">
+    <div class="demo-section">
       <h3 class="demo-title">🔄 See The Transformation</h3>
       <div class="demo-flow">
         <div class="demo-item">
-          <!-- --- CODE FIX START --- -->
-          <!-- Replaced the placeholder div content with an actual image tag -->
           <div class="demo-placeholder">
-            <img src="demo.png" alt="Original sensitive file" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/FFFFFF?text=Image+Not+Found';">
+            <img src="demo.png" alt="Original sensitive file" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/FFFFFF?text=Image+Not+Found';" />
           </div>
-          <!-- --- CODE FIX END --- -->
           <div class="demo-label">Your Private File</div>
           <div class="demo-description">Photos, videos etc - anything you want to keep absolutely private</div>
         </div>
-        
-        <div class="demo-arrow">
-          <i class='bx bx-right-arrow-alt'></i>
-        </div>
-        
+        <div class="demo-arrow"><i class='bx bx-right-arrow-alt' aria-hidden="true"></i></div>
         <div class="demo-item">
-          <!-- --- CODE FIX START --- -->
-          <!-- Replaced the placeholder div content with an actual image tag -->
           <div class="demo-placeholder">
-            <img src="encrypt.png" alt="Encrypted text file" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/FFFFFF?text=Image+Not+Found';">
+            <img src="encrypt.png" alt="Encrypted text file" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/FFFFFF?text=Image+Not+Found';" />
           </div>
-          <!-- --- CODE FIX END --- -->
           <div class="demo-label">Encrypted Text File</div>
           <div class="demo-description">Unreadable encrypted text that replaces your original file completely</div>
         </div>
       </div>
-      <p style="text-align: center; color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; margin-top: 2rem;">
+      <p style="text-align:center; color:rgba(255,255,255,.8); font-size:1.1rem; margin-top:2rem;">
         <span class="feature-highlight">Even if your device gets hacked or stolen</span>, attackers will only find meaningless encrypted text instead of your actual sensitive files.
       </p>
     </div>
 
     <div class="analogy-section">
-      <h3 class="analogy-title">
-        <i class='bx bx-lock-alt'></i>
-        How Our Security Works
-      </h3>
-      <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 3rem;">
-        Think of your file as being locked in a special padlock where the key is broken into two pieces
-      </p>
-      
+      <h3 class="analogy-title"><i class='bx bx-lock-alt' aria-hidden="true"></i> How Our Security Works</h3>
+      <p style="font-size:1.1rem; color:rgba(255,255,255,.8); margin-bottom:3rem;">Think of your file as being locked in a special padlock where the key is broken into two pieces</p>
       <div class="lock-visual">
         <div class="lock-component">
-          <div class="lock-icon"><i class='bx bx-lock-alt'></i></div>
+          <div class="lock-icon"><i class='bx bx-lock-alt' aria-hidden="true"></i></div>
           <div class="lock-title">Encrypted File</div>
           <div class="lock-desc">Contains one piece of the key hidden inside the encrypted data</div>
         </div>
-        
-        <div class="plus-icon"><i class='bx bx-plus'></i></div>
-        
+        <div class="plus-icon"><i class='bx bx-plus' aria-hidden="true"></i></div>
         <div class="lock-component">
-          <div class="lock-icon"><i class='bx bx-key'></i></div>
+          <div class="lock-icon"><i class='bx bx-key' aria-hidden="true"></i></div>
           <div class="lock-title">Your Password</div>
           <div class="lock-desc">The second piece of the key that only you know</div>
         </div>
       </div>
-      
-      <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.7);">
-        <span class="feature-highlight">Unless both pieces match perfectly</span>, the padlock can never be opened. 
-        Even if someone steals your encrypted file, it's completely useless without your password.
-      </p>
+      <p style="font-size:1rem; color:rgba(255,255,255,.7);"><span class="feature-highlight">Unless both pieces match perfectly</span>, the padlock can never be opened. Even if someone steals your encrypted file, it's completely useless without your password.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-header">
-          <div class="feature-icon"><i class='bx bx-shield-alt-2'></i></div>
-          <h4 class="feature-title">100% Client-Side Security</h4>
-        </div>
-        <div class="feature-content">
-          All encryption happens <span class="feature-highlight">directly in your browser</span> - never on our servers. Your files never leave your device during the encryption process, ensuring complete privacy and control.
-        </div>
+        <div class="feature-header"><div class="feature-icon"><i class='bx bx-shield-alt-2' aria-hidden="true"></i></div><h4 class="feature-title">100% Client-Side Security</h4></div>
+        <div class="feature-content">All encryption happens <span class="feature-highlight">directly in your browser</span> - never on our servers. Your files never leave your device during the encryption process, ensuring complete privacy and control.</div>
       </div>
-
       <div class="feature-card">
-        <div class="feature-header">
-          <div class="feature-icon"><i class='bx bx-server'></i></div>
-          <h4 class="feature-title">Optional Secure Cloud Storage</h4>
-        </div>
-        <div class="feature-content">
-          Want to access your files from other devices? Store your <span class="feature-highlight">already-encrypted files</span> on our servers. Since encryption happened on your device, <span class="feature-highlight">even we can't decrypt them</span> - only you can.
-        </div>
+        <div class="feature-header"><div class="feature-icon"><i class='bx bx-server' aria-hidden="true"></i></div><h4 class="feature-title">Optional Secure Cloud Storage</h4></div>
+        <div class="feature-content">Want to access your files from other devices? Store your <span class="feature-highlight">already-encrypted files</span> on our servers. Since encryption happened on your device, <span class="feature-highlight">even we can't decrypt them</span> - only you can.</div>
       </div>
-
       <div class="feature-card">
-        <div class="feature-header">
-          <div class="feature-icon"><i class='bx bx-error-circle'></i></div>
-          <h4 class="feature-title">Hack-Proof Protection</h4>
-        </div>
-        <div class="feature-content">
-          If your device gets compromised, hackers will find <span class="feature-highlight">meaningless encrypted text</span> instead of your actual photos and videos. Without your password, the data is completely worthless.
-        </div>
+        <div class="feature-header"><div class="feature-icon"><i class='bx bx-error-circle' aria-hidden="true"></i></div><h4 class="feature-title">Hack-Proof Protection</h4></div>
+        <div class="feature-content">If your device gets compromised, hackers will find <span class="feature-highlight">meaningless encrypted text</span> instead of your actual photos and videos. Without your password, the data is completely worthless.</div>
       </div>
-
       <div class="feature-card">
-        <div class="feature-header">
-          <div class="feature-icon"><i class='bx bx-refresh'></i></div>
-          <h4 class="feature-title">Perfect Recovery System</h4>
-        </div>
-        <div class="feature-content">
-          Device stolen or encrypted file deleted? No problem. Download your encrypted files from our secure cloud and <span class="feature-highlight">decrypt them on any device</span> using your password.
-        </div>
+        <div class="feature-header"><div class="feature-icon"><i class='bx bx-refresh' aria-hidden="true"></i></div><h4 class="feature-title">Perfect Recovery System</h4></div>
+        <div class="feature-content">Device stolen or encrypted file deleted? No problem. Download your encrypted files from our secure cloud and <span class="feature-highlight">decrypt them on any device</span> using your password.</div>
       </div>
-
       <div class="feature-card">
-        <div class="feature-header">
-          <div class="feature-icon"><i class='bx bx-code-alt'></i></div>
-          <h4 class="feature-title">Open Source Transparency</h4>
-        </div>
-        <div class="feature-content">
-          Our code is completely <span class="feature-highlight">open and transparent</span>. You can verify exactly how your files are encrypted and ensure there are no backdoors or hidden vulnerabilities.
-        </div>
+        <div class="feature-header"><div class="feature-icon"><i class='bx bx-code-alt' aria-hidden="true"></i></div><h4 class="feature-title">Open Source Transparency</h4></div>
+        <div class="feature-content">Our code is completely <span class="feature-highlight">open and transparent</span>. You can verify exactly how your files are encrypted and ensure there are no backdoors or hidden vulnerabilities.</div>
       </div>
-
       <div class="feature-card">
-        <div class="feature-header">
-          <div class="feature-icon"><i class='bx bx-time'></i></div>
-          <h4 class="feature-title">Zero Knowledge Architecture</h4>
-        </div>
-        <div class="feature-content">
-          We operate on a <span class="feature-highlight">zero-knowledge principle</span> - we never see your files, passwords, or decrypted data. Your privacy is mathematically guaranteed by design.
-        </div>
+        <div class="feature-header"><div class="feature-icon"><i class='bx bx-time' aria-hidden="true"></i></div><h4 class="feature-title">Zero Knowledge Architecture</h4></div>
+        <div class="feature-content">We operate on a <span class="feature-highlight">zero-knowledge principle</span> - we never see your files, passwords, or decrypted data. Your privacy is mathematically guaranteed by design.</div>
       </div>
     </div>
 
     <div class="trust-section">
       <h3 class="trust-title">🌸 Your Trust is Our Priority 💙</h3>
       <p class="trust-subtitle">Built with complete transparency and your privacy at the core</p>
-      
       <div class="trust-points">
-        <div class="trust-point">
-          <div class="trust-point-icon"><i class='bx bx-check-shield'></i></div>
-          <div class="trust-point-title">No Server Processing</div>
-          <div class="trust-point-desc">Encryption happens entirely on your device - we never see your files</div>
-        </div>
-        
-        <div class="trust-point">
-          <div class="trust-point-icon"><i class='bx bx-lock'></i></div>
-          <div class="trust-point-title">Password Protection</div>
-          <div class="trust-point-desc">Only you know the password - we can't decrypt your files even if we wanted to</div>
-        </div>
-        
-        <div class="trust-point">
-          <div class="trust-point-icon"><i class='bx bx-code-block'></i></div>
-          <div class="trust-point-title">Open Source Code</div>
-          <div class="trust-point-desc">Inspect our code anytime - no hidden processes or backdoors</div>
-        </div>
-        
-        <div class="trust-point">
-          <div class="trust-point-icon"><i class='bx bx-user-check'></i></div>
-          <div class="trust-point-title">Your Data, Your Control</div>
-          <div class="trust-point-desc">You own and control your encrypted files completely - delete anytime</div>
-        </div>
+        <div class="trust-point"><div class="trust-point-icon"><i class='bx bx-check-shield' aria-hidden="true"></i></div><div class="trust-point-title">No Server Processing</div><div class="trust-point-desc">Encryption happens entirely on your device - we never see your files</div></div>
+        <div class="trust-point"><div class="trust-point-icon"><i class='bx bx-lock' aria-hidden="true"></i></div><div class="trust-point-title">Password Protection</div><div class="trust-point-desc">Only you know the password - we can't decrypt your files even if we wanted to</div></div>
+        <div class="trust-point"><div class="trust-point-icon"><i class='bx bx-code-block' aria-hidden="true"></i></div><div class="trust-point-title">Open Source Code</div><div class="trust-point-desc">Inspect our code anytime - no hidden processes or backdoors</div></div>
+        <div class="trust-point"><div class="trust-point-icon"><i class='bx bx-user-check' aria-hidden="true"></i></div><div class="trust-point-title">Your Data, Your Control</div><div class="trust-point-desc">You own and control your encrypted files completely - delete anytime</div></div>
       </div>
     </div>
   </div>
 
-<div class="about-project">
- <h2>💻 <span id="title">Developer Note</span> 💻</h2>
-
+  <div class="about-project">
+    <h2>💻 <span id="title">Developer Note</span> 💻</h2>
     <div class="about-content">
-      <p>
-        <span class="emoji-highlight">👋</span> 
-        <span>Hey! It's <span class="keyword">Aadityansha</span>, a 17-year-old high school student and the developer of this project. Hope you loved using this privacy tool! 😊</span>
-      </p>
-      
-      <p>
-        <span class="emoji-highlight">🎨</span> 
-        <span>For some parts, <span class="keyword">AI was used to create the code</span>, however each and every <span class="keyword">architecture and design</span> was crafted by me. Every prompt about how encryption will happen, the flow, the security - all planned by me!</span>
-      </p>
-      
-      <p>
-        <span class="emoji-highlight">🔐</span> 
-        <span>Even when I told AI to code something, I made sure to <span class="keyword">keep it different</span> and add my own touch. The entire encryption logic, user flow, and privacy-first approach - that's all my brain work! 🧠</span>
-      </p>
-      
-      <p>
-        <span class="emoji-highlight">💭</span> 
-        <span>This project is like my <span class="keyword">digital handwriting</span> - you can see my style and thinking in every feature, even though some code was generated. The soul of this tool is completely mine! ✨</span>
-      </p>
+      <p><span class="emoji-highlight">👋</span> <span>Hey! It's <span class="keyword">Aadityansha</span>, a 17-year-old high school student and the developer of this project. Hope you loved using this privacy tool! 😊</span></p>
+      <p><span class="emoji-highlight">🎨</span> <span>For some parts, <span class="keyword">AI was used to create the code</span>, however each and every <span class="keyword">architecture and design</span> was crafted by me. Every prompt about how encryption will happen, the flow, the security - all planned by me!</span></p>
+      <p><span class="emoji-highlight">🔐</span> <span>Even when I told AI to code something, I made sure to <span class="keyword">keep it different</span> and add my own touch. The entire encryption logic, user flow, and privacy-first approach - that's all my brain work! 🧠</span></p>
+      <p><span class="emoji-highlight">💭</span> <span>This project is like my <span class="keyword">digital handwriting</span> - you can see my style and thinking in every feature, even though some code was generated. The soul of this tool is completely mine! ✨</span></p>
     </div>
 
-  <!-- Action Buttons -->
-  <div class="action-buttons">
-    <a href="https://github.com/aadityansha06/make-private" target="_blank" class="action-button collaborate-btn">
-      <i class="bx bx-code-alt"></i>
-      Collaborate
-    </a>
-    <a href="https://aadityansha06.github.io/donate.html" target="_blank"  class="action-button donate-btn">
-      <i class="bx bx-donate-heart"></i>
-      Support via Donation
-    </a>
-  </div>
-</div>
-<div class="enhanced-footer">
-  <h3 class="quick-links-header">Quick Links</h3>
-
-  <div class="footer-columns">
-    <!-- Reach -->
-    <div class="footer-column">
-      <div class="footer-title">Reach</div>
-      <div class="footer-icons-row">
-        <a href="https://t.me/aadityansha" target="_blank" class="footer-link" title="Telegram">
-          <i class='bx bxl-telegram'></i>
-        </a>
-        <a href="mailto:pkumariverma42@gmail.com" target="_blank" class="footer-link" title="Email">
-          <i class='bx bx-envelope'></i>
-        </a>
-        <a href="https://www.linkedin.com/in/aadityansha-verma-a4a35a213/" class="footer-link" title="LinkedIn">
-          <i class='bx bxl-linkedin'></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- Collab -->
-    <div class="footer-column">
-      <div class="footer-title">Collab</div>
-      <div class="footer-icons-row">
-        <a href="https:github.com/aadityansha06/make-private" class="footer-link" title="GitHub">
-          <i class='bx bxl-github'></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- Support -->
-    <div class="footer-column">
-      <div class="footer-title">Support</div>
-      <div class="footer-icons-row">
-        <a href="https://aadityansha06.github.io/donate.html" class="footer-link" title="Donate">
-          <i class='bx bx-donate-heart'></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- Portfolio -->
-    <div class="footer-column">
-      <div class="footer-title">Portfolio</div>
-      <div class="footer-icons-row">
-        <a href="https://aadityansha06.github.io/" class="footer-link" target="_blank" title="portfolio">
-          
-          <i class='bx bxs-briefcase'></i>
-        </a>
-      </div>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <a href="https://github.com/aadityansha06/make-private" target="_blank" rel="noopener noreferrer" class="action-button collaborate-btn"><i class="bx bx-code-alt" aria-hidden="true"></i> Collaborate</a>
+      <a href="https://aadityansha06.github.io/donate.html" target="_blank" rel="noopener noreferrer" class="action-button donate-btn"><i class="bx bx-donate-heart" aria-hidden="true"></i> Support via Donation</a>
     </div>
   </div>
-  <p>
-    <span class="footer-metallic-text">Designed with</span> ❤️ 
-    <span class="footer-metallic-text">for your privacy</span> 🔒
-    
-  </p>
-  <p>
-    <span class="footer-metallic-text"> By AADITYANSHA
-    </span>
-  </p>
-  
-</div>
-<p class="copyright" style="text-align: center;">Make It private | Copyright © 2025-26 | All Rights Reserved</p>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <div class="enhanced-footer">
+    <h3 class="quick-links-header">Quick Links</h3>
+    <div class="footer-columns">
+      <!-- Reach -->
+      <div class="footer-column">
+        <div class="footer-title">Reach</div>
+        <div class="footer-icons-row">
+          <a href="https://t.me/aadityansha" target="_blank" rel="noopener noreferrer" class="footer-link" title="Telegram"><i class='bx bxl-telegram' aria-hidden="true"></i></a>
+          <a href="mailto:pkumariverma42@gmail.com" target="_blank" rel="noopener noreferrer" class="footer-link" title="Email"><i class='bx bx-envelope' aria-hidden="true"></i></a>
+          <a href="https://www.linkedin.com/in/aadityansha-verma-a4a35a213/" target="_blank" rel="noopener noreferrer" class="footer-link" title="LinkedIn"><i class='bx bxl-linkedin' aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <!-- Collab -->
+      <div class="footer-column">
+        <div class="footer-title">Collab</div>
+        <div class="footer-icons-row">
+          <a href="https://github.com/aadityansha06/make-private" target="_blank" rel="noopener noreferrer" class="footer-link" title="GitHub"><i class='bx bxl-github' aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <!-- Support -->
+      <div class="footer-column">
+        <div class="footer-title">Support</div>
+        <div class="footer-icons-row">
+          <a href="https://aadityansha06.github.io/donate.html" target="_blank" rel="noopener noreferrer" class="footer-link" title="Donate"><i class='bx bx-donate-heart' aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <!-- Portfolio -->
+      <div class="footer-column">
+        <div class="footer-title">Portfolio</div>
+        <div class="footer-icons-row">
+          <a href="https://aadityansha06.github.io/" class="footer-link" target="_blank" rel="noopener noreferrer" title="portfolio"><i class='bx bxs-briefcase' aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <p><span class="footer-metallic-text">Designed with</span> ❤️ <span class="footer-metallic-text">for your privacy</span> 🔒</p>
+    <p><span class="footer-metallic-text"> By AADITYANSHA</span></p>
+  </div>
 
-<script type="module">
-import { supabase } from "./supabaseClient.js";
+  <p class="copyright" style="text-align:center;">Make It Private | Copyright © 2025-26 | All Rights Reserved</p>
 
-// Sidebar toggle
-const avatar = document.getElementById("avatar");
-const sidebar = document.getElementById("sidebar");
-const closeSidebar = document.getElementById("closeSidebar");
-const userEmail = document.getElementById("userEmail");
-const logoutBtn = document.getElementById("logoutBtn");
+  <!-- Scripts -->
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
 
-// Check user session
-// Check user session
-async function checkAuth() {
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) {
-    // Not logged in → redirect to login
-    window.location.href = "/index.html";
-    return null;
-  }
-  // Get the first letter of the user's email and capitalize it
-  const firstLetter = data.user.email ? data.user.email.charAt(0).toUpperCase() : 'U';
-  
-  // Set the avatar text
-  document.getElementById("avatar").textContent = firstLetter;
-  
-  return data.user;
-}//Replace your existing avatar click handler with this:
+    function updateUI(session) {
+      const avatar = document.getElementById("avatar");
+      const userEmail = document.getElementById("userEmail");
+      if (!avatar || !userEmail) return;
 
-avatar.addEventListener("click", async () => {
-  console.log("Avatar clicked"); // debug
-  const user = await checkAuth();
-  if (user) {
-    // console.log("User found:", user.email);
-    userEmail.textContent = user.email;
-    sidebar.classList.add("open"); // Use class-based approach
-  } else {
-    console.log("No user, redirecting to login");
-     window.location.href = "/login.html";
-  }
-});
+      if (session && session.user) {
+        const email = session.user.email;
+        const firstLetter = email ? email.charAt(0).toUpperCase() : 'U';
+        avatar.textContent = firstLetter;
+        userEmail.textContent = email || '';
+        document.getElementById('sidebar')?.setAttribute('aria-hidden', 'false');
+      } else {
+        avatar.innerHTML = `<i class='bx bx-user' aria-hidden="true"></i>`;
+        userEmail.textContent = "";
+        document.getElementById('sidebar')?.setAttribute('aria-hidden', 'true');
+      }
+    }
 
-// Close sidebar
-closeSidebar.addEventListener("click", () => {
-  sidebar.classList.remove("open"); // Use class-based approach
-});
+    function setupEventListeners() {
+      const avatar = document.getElementById("avatar");
+      const sidebar = document.getElementById("sidebar");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const closeSidebar = document.getElementById("closeSidebar");
 
-// Logout
-logoutBtn.addEventListener("click", async () => {
-  await supabase.auth.signOut();
-  window.location.href = "/index.html";
-});
-</script>
+      if (avatar) {
+        avatar.addEventListener("click", async (e) => {
+          e.preventDefault();
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session && session.user) {
+            sidebar?.classList.add("open");
+            sidebar?.setAttribute('aria-hidden', 'false');
+          } else {
+            window.location.href = "/login.html";
+          }
+        });
+      }
 
-<script  type="module" src="private.js"></script>
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          await supabase.auth.signOut();
+          sidebar?.classList.remove("open");
+          sidebar?.setAttribute('aria-hidden', 'true');
+        });
+      }
 
-<script type="module" src="account.js"></script>
+      if (closeSidebar) {
+        closeSidebar.addEventListener("click", () => {
+          sidebar?.classList.remove("open");
+          sidebar?.setAttribute('aria-hidden', 'true');
+        });
+      }
 
+      // Simple tab toggle a11y helper
+      const encryptTab = document.getElementById('encryptTab');
+      const decryptTab = document.getElementById('decryptTab');
+      const encryptSection = document.getElementById('encryptSection');
+      const decryptSection = document.getElementById('decryptSection');
 
+      function activate(tab) {
+        const isEncrypt = tab === 'encrypt';
+        encryptTab?.classList.toggle('active', isEncrypt);
+        decryptTab?.classList.toggle('active', !isEncrypt);
+        encryptTab?.setAttribute('aria-selected', String(isEncrypt));
+        decryptTab?.setAttribute('aria-selected', String(!isEncrypt));
+        encryptSection?.toggleAttribute('hidden', !isEncrypt);
+        decryptSection?.toggleAttribute('hidden', isEncrypt);
+      }
 
+      encryptTab?.addEventListener('click', () => activate('encrypt'));
+      decryptTab?.addEventListener('click', () => activate('decrypt'));
+    }
 
-
+    document.addEventListener('DOMContentLoaded', () => {
+      setupEventListeners();
+      supabase.auth.onAuthStateChange((_event, session) => {
+        updateUI(session);
+      });
+    });
+  </script>
+  <script type="module" src="private.js"></script>
+  <script type="module" src="account.js"></script>
 </body>
 </html>
-
-
